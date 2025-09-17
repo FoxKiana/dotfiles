@@ -5,8 +5,6 @@
 include current-theme.conf
 # END_KITTY_THEME
 
-font_family FiraCode
-
 initial_window_width 900
 initial_window_height 500
 remember_window_size no

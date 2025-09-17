@@ -50,7 +50,7 @@
   (add-to-list 'treesit-auto-recipe-list '(c3-mode . ("https://github.com/c3lang/tree-sitter-c3")))
   (global-treesit-auto-mode))
 
-(add-to-list 'load-path "/home/snowfox/.emacs.d/c3-ts-mode")
+(add-to-list 'load-path "/home/foxkiana/.emacs.d/c3-ts-mode")
 (require 'c3-ts-mode)
 
 (add-to-list 'auto-mode-alist '("\\.c3\\'" . c3-ts-mode))
@@ -60,3 +60,4 @@
     (interactive)
     (let ((compile-command nil))
       (call-interactively 'compile))))
+

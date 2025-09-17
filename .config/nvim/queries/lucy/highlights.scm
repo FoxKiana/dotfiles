@@ -167,3 +167,5 @@
 )
 
 (BUILTIN_VAR) @parameter
+
+(ATTRIBUTE) @parameter

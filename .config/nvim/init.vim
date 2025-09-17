@@ -25,10 +25,26 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'mfussenegger/nvim-dap'
 Plug 'nvim-neotest/nvim-nio'
 Plug 'rcarriga/nvim-dap-ui'
+Plug 'neovim/nvim-lspconfig'
 
 call plug#end()
 
 lua << EOF
+local lspconfig = require('lspconfig')
+
+lspconfig.c3ls.setup({
+  cmd = {'/home/foxkiana/.local/bin/c3lsp'},
+  filetypes = {'c3'},
+  single_file_support = true,
+  on_attach = function(client, bufnr)
+    local opts = { noremap = true, silent = true, buffer = bufnr }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+  end
+})
+
 vim.opt.colorcolumn = nil
 
 vim.cmd([[let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro']])
@@ -39,7 +55,7 @@ vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'Pmenu',       { bg = 'none' })
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "ruby", "rust", "kotlin", "nasm", "lucy" },
+  ensure_installed = { "c3", "javascript" },
   highlight = { enable = true },
 }
 
@@ -54,11 +70,20 @@ parser_config.c3 = {
 
 parser_config.lucy = {
   install_info = {
-    url = "https://github.com/lucy-language/tree-sitter-lucy",
+    -- url = "https://github.com/lucy-language/tree-sitter-lucy",
+    url = "/home/foxkiana/dev/tree-sitter-lucy",
     files = { "src/parser.c" },
     branch = "master"
   },
   filetype = "lc"
+}
+
+parser_config.c3_build_file = {
+  install_info = {
+    url = "/home/foxkiana/dev/c3-build-file-ts",
+    files = { "src/parser.c" },
+    branch = "master"
+  },
 }
 
 vim.g.loaded_netrw = 1
@@ -79,19 +104,28 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
+
+require("catppuccin").setup({
+  transparent_background = true
+})
 EOF
 
-autocmd FileType asm        setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-autocmd FileType c3         setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-autocmd FileType c          setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-autocmd FileType html       setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-autocmd FileType vim        setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-autocmd FileType javascript setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-autocmd FileType typescript setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-autocmd FileType lc         setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType asm           setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType c3            setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType c             setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType html          setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType vim           setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType javascript    setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType typescript    setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType lc            setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType c3_build_file setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType java          setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType glsl          setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 
 autocmd BufRead,BufNewFile *.c3,*.c3i,*.c3t set filetype=c3
 autocmd BufRead,BufNewFile *.lc             set filetype=lc
+autocmd BufRead,BufNewFile C3BuildFile      set filetype=c3_build_file
+autocmd BufRead,BufNewFile *.java           set filetype=java
 
 inoremap jj <Esc>
 
