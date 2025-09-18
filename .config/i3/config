@@ -85,7 +85,7 @@ bindsym $mod+t exec kitty zsh -c "btm"
 
 exec dunst
 
-exec_always feh --bg-scale ~/img/wallpaper.png
+exec_always feh --bg-scale ~/img/wallpaper_fall.png
 
 exec ~/.screenlayout/layout.sh
 
@@ -97,7 +97,7 @@ default_floating_border pixel 2
 gaps inner 10
 gaps outer 0
 
-client.focused 	 #334d32 #334d32 #334d32 #334d32 #334d32
-client.unfocused #334d32 #334d32 #334d32 #334d32 #334d32
+client.focused 	 #f0c6743d #f0c6743d #f0c6743d #f0c6743d #f0c6743d
+client.unfocused #f0c6743d #f0c6743d #f0c6743d #f0c6743d #f0c6743d
 
 exec_always --no-startup-id bash -c i3-msg workspace 4; i3-msg gaps top current set 37;
